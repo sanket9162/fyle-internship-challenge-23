@@ -1,0 +1,13 @@
+<div class="max-w-lg p-4 mb-3">
+    <div class="text-4xl font-bold pb-1">{{repo.name}}</div>
+    <div class="pb-1 mb-3">
+      {{repo.description}}
+    </div>
+    <div class="flex flex-wrap">
+    <div class=" "*ngFor="let lang of langs">
+      <p  class=" border rounded-xl bg-blue-500 text-white w-auto mr-1 px-2" >{{lang}}</p>
+      <!-- <p class="border border-red-900 w-auto mr-1 px-2" >python</p> -->
+    </div>
+  </div>
+  </div>
+  <div class="flex">

@@ -1,5 +1,123 @@
-<div class="grid h-screen place-items-center">
+<div class="grid h-screen place-items-center" *ngIf="search">
   <div class="font-bold text-3xl">
-    Fyle Internship Challenge
+    Search github user
+    <div action="" class="py-4 flex items-center">
+      <input
+        type="text"
+        id="githubUsername"
+        [(ngModel)]="githubUsername"
+        class="border-blue-500 border border-solid rounded-2xl py-2 px-3 text-lg"
+        placeholder="Username"
+      />
+      <button
+        class="border bg-blue-500 hover:bg-blue-400 text-white border-solid rounded-lg px-2 ms-2"
+        (click)="getUSerData()"
+      >
+        Search
+      </button>
+    </div>
   </div>
+</div>
+<div
+  class="flex my-36 mx-72 justify-center items-center px-6 py-8"
+  *ngIf="userData"
+>
+  <div class="flex items-center">
+    <div class="py-4">
+      <img
+        class="relative mx-auto rounded-full overflow-hidden w-60"
+        src="{{ user.avatar_url }}"
+      />
+    </div>
+    <div class="px-8">
+      <div class="font-bold text-2xl">{{ user.name }}</div>
+      <div class="font-semibold text-xl text-gray-400 mb-2">
+        {{ user.login }}
+      </div>
+
+      <div>
+        <div class="w-60">{{ user.bio }}</div>
+        <div class="flex items-center">
+          <img
+            src="../assets/images/location.png"
+            alt="location"
+            class="h-5 pr-1"
+          />
+          {{ user.location }}
+        </div>
+        <div class="flex items-center">
+          <img src="../assets/images/twitter.png" alt="" class="h-5 pr-1" />
+          <a href="https://twitter.com/{{ user.twitter_username }}">{{
+            user.twitter_username
+          }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <img
+      src="https://github-readme-stats.vercel.app/api/top-langs/?username={{
+        user.login
+      }}&theme=default&layout=compact&hide"
+      alt=""
+      srcset=""
+      class="h-52 pl-24"
+    />
+  </div>
+</div>
+
+<div class="container mx-auto grid grid-cols-2" *ngIf="userRepo">
+  <div
+    class="mx-24 mb-3 border border-blue-500 rounded-xl"
+    *ngFor="let repo of repos"
+  >
+    <app-card [repo]="repo" [user]="user"> </app-card>
+  </div>
+</div>
+<div class="flex justify-center" *ngIf="userRepo">
+
+    <div class="my-2 flex flex-col w-[75%]">
+      <div class="text-center">
+        Total Repositories Per Page
+        <div>
+          <div class="text-center">
+            <input
+              type="number"
+              id="rep"
+              class="text-center text-black p-2 border-solid border-2 my-2"
+              max="100"
+              min="1"
+              [(ngModel)]="per_page"
+              placeholder="{{ per_page }}"
+            />
+          </div>
+          <button
+            class="px-2 py-1 bg-blue-500 text-white text-center rounded-lg"
+            (click)="change_per_page()"
+          >
+            Change
+          </button>
+        </div>
+
+        <div class="flex mx-2 my-4 flex-wrap justify-center">
+          <div *ngFor="let item of createRange()" class="flex flex-wrap">
+            <div
+              *ngIf="page == item"
+              class="p-1 border-2 bg-blue-500 text-white border-black border-solid mx-1 my-1 cursor-pointer"
+              (click)="changePage(item)"
+            >
+              {{ item }}
+            </div>
+            <div
+              *ngIf="page != item"
+              class="p-1 border-2 border-black border-solid mx-1 my-1 cursor-pointer"
+              (click)="changePage(item)"
+            >
+              {{ item }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </div>
